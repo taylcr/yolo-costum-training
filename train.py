@@ -12,4 +12,9 @@ model = YOLO("yolov8n.pt")
 
 #results = model.train(data="config.yaml", epochs=26, freeze=[1, 10])
 
-results = model.train(data="config.yaml", epochs=26, freeze=10)
+#results = model.train(data="config.yaml", epochs=26, freeze=10)
+
+#results = model.train(data="config.yaml", epochs=26)
+
+# Start fine-tuning with your dataset (new + original classes)
+model.train(data='config.yaml', epochs=30, imgsz=640)

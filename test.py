@@ -2,12 +2,11 @@ import cv2
 from ultralytics import YOLO
 
 def main():
+
     # Load the YOLOv8 nano model (ensure 'yolov8n.pt' is available or adjust the path)
     #model = YOLO('yolov8n.pt')
 
-    model = YOLO("runs/detect/train8/weights/best.pt")
-
-    
+    model = YOLO("runs/detect/train11/weights/best.pt")
 
 
     # Initialize webcam capture (0 is the default camera)

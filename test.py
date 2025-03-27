@@ -8,6 +8,8 @@ def main():
 
     model = YOLO("runs/detect/train11/weights/best.pt")
 
+    
+
 
     # Initialize webcam capture (0 is the default camera)
     cap = cv2.VideoCapture(0)

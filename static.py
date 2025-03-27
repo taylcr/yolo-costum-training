@@ -1,7 +1,8 @@
 import cv2
 from ultralytics import YOLO
 
-model = YOLO("runs/detect/train9/weights/best.pt")
+model = YOLO("runs/detect/train12/weights/best.pt")
+
 results = model.predict("static_test/IMG_8905.jpg", conf=0.25, show=True)
 
 # Extract the annotated image from the first result (adjust if needed)

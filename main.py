@@ -1,39 +1,37 @@
 import cv2
 from ultralytics import YOLO
 
-def main():
-    # Load the YOLOv8 nano model (ensure 'yolov8n.pt' is available or adjust the path)
-    model = YOLO('yolov8n.pt')
+# 1. Load your trained YOLOv8 model
 
-    # Initialize webcam capture (0 is the default camera)
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
-        print("Error: Could not open webcam.")
-        return
+#model = YOLO("yolov8n.pt")  # Replace 'best.pt' with your own weights file (e.g., 'yolov8n.pt', 'runs/detect/train/weights/best.pt', etc.)
 
-    print("Press 'q' to exit.")
+model = YOLO("runs/detect/train8/weights/best.pt")
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("Error: Failed to grab frame.")
-            break
 
-        # Run YOLO detection on the frame
-        results = model(frame)
+# 2. Open a connection to your webcam (0 is usually the default camera)
+cap = cv2.VideoCapture(0)
 
-        # Annotate the frame with detection results
-        annotated_frame = results[0].plot()
+while True:
+    # 3. Read a frame from the webcam
+    ret, frame = cap.read()
+    if not ret:
+        print("Failed to grab frame from webcam.")
+        break
+    
+    # 4. Perform inference
+    results = model.predict(frame, conf=0.5)  # you can adjust the conf threshold as needed
 
-        # Display the annotated frame
-        cv2.imshow("YOLOv8 Webcam Detection", annotated_frame)
+    # 5. Draw the predictions on the frame
+    # results[0].plot() returns an annotated NumPy array with bounding boxes, labels, etc.
+    annotated_frame = results[0].plot()
 
-        # Exit on pressing 'q'
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    # 6. Show the annotated frame
+    cv2.imshow("YOLOv8 Webcam", annotated_frame)
 
-    cap.release()
-    cv2.destroyAllWindows()
+    # 7. Press 'q' to quit
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
-if __name__ == '__main__':
-    main()
+# 8. Release resources
+cap.release()
+cv2.destroyAllWindows()
